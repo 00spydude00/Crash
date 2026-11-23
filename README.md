@@ -16,8 +16,6 @@ Then, simply execute from the name of the output file and voila! You have yourse
 
 # What is missing?
 
-The absolute most important thing that this shell is missing as of now is a command to change your directory. I might have that implemented soon, but I also want to get on to other things.
-
-Crush is also missing a load of other things, like file compatability (scripting), which I don't know if I will ever implement, but it could be a fun project.
+Crush is missing a load of things, like file compatability (scripting), which I don't know if I will ever implement, but it could be a fun project.
 
 If you want to make a PR or an Issue, feel free.

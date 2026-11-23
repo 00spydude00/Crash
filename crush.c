@@ -1,14 +1,16 @@
+#include <bits/types/idtype_t.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <wait.h>
+#include <linux/limits.h>
 
-int forkAndExecute(char * argc, char * argv[]) {
+int forkAndExecute(char * args[]) {
 	pid_t pid;
 	int status;
 	pid = fork();
 	if (pid == 0) {
-		execvp(argc, argv);
+		execvp(args[0], args);
 		perror("execvp");
 	}
 	else if (pid < 0) {
@@ -23,8 +25,8 @@ int forkAndExecute(char * argc, char * argv[]) {
 }
 int readLine(void) {
 	char command[32];
-	char exit[] = "exit\n";
-	printf("CRUSH> ");
+	char cwd[PATH_MAX];
+	printf("%s CRUSH>", getcwd(cwd, sizeof(cwd)));
 	fgets(command, sizeof(command), stdin);
 	size_t lengthOfCommand = strlen(command);
 	if (lengthOfCommand > 30) {
@@ -32,20 +34,40 @@ int readLine(void) {
 		return 1;
 	}
 
+	// "exit" command
+	char exit[] = "exit\n";
 	if (strncmp(command, exit, lengthOfCommand) == 0) {
 		return 0;
 	}
 
-	char *argv[10];
+	char *args[10];
 	int i = 0;
-	char* token = strtok(command, " ");
-	while(token != NULL && i < 9) {
+	char* token = strtok(command, " \n");
+	// token != NULL && i < 9
+	while(token) {
 		// printf("you said: %s\n", token);
-		argv[i] = token;
-		token = strtok(0, " \n\t");
-		i++;
+		args[i] = token;
+		token = strtok(NULL, " \n");
+		// printf("args at %d: %s\n", i, args[i]);
+		i += 1;
+		// printf("args at %d: %s\n", i, args[i]);
 	}
-	return forkAndExecute(argv[0], argv);
+	args[i] = NULL;
+	// "cd" command
+	char * cd = "cd";
+	if(strcmp(args[0], cd) == 0) {
+		if(args[1] == NULL) {
+			fprintf(stderr, "cd: unexpected argument");
+		}
+		else if (chdir(args[1]) != 0) {
+			perror("CRUSH");
+		}
+		return -1;
+	}
+
+	else {
+		return forkAndExecute(args);
+	}
 }
 int main() {
 	while(1) {

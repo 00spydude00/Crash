@@ -18,4 +18,6 @@ Then, simply execute from the name of the output file and voila! You have yourse
 
 Crush is missing a load of things, like file compatability (scripting), which I don't know if I will ever implement, but it could be a fun project.
 
+Crush, as of now, also limits the total character count of a command to 30, and also limits total arguments to 10, though that will likely change.
+
 If you want to make a PR or an Issue, feel free.

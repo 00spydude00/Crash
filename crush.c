@@ -38,7 +38,7 @@ int readLine(void) {
 
 	char *argv[10];
 	int i = 0;
-	char* token = strtok(command, " \n\t");
+	char* token = strtok(command, " ");
 	while(token != NULL && i < 9) {
 		// printf("you said: %s\n", token);
 		argv[i] = token;

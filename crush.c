@@ -10,7 +10,6 @@ int forkAndExecute(char * argc, char * argv[]) {
 	if (pid == 0) {
 		execvp(argc, argv);
 		perror("execvp");
-		return -1;
 	}
 	else if (pid < 0) {
 		perror("fork");

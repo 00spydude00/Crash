@@ -3,12 +3,12 @@
 #include <unistd.h>
 
 int readLine(void) {
-	char command[32];
+	char command[92];
 	char exit[] = "exit\n";
 	printf("CRUSH> ");
 	fgets(command, sizeof(command), stdin);
 	size_t lengthOfCommand = strlen(command);
-	if (lengthOfCommand > 30) {
+	if (lengthOfCommand > 90) {
 		printf("ERROR: command too long. Must be 30 chars or less.");
 		return 1;
 	}
@@ -17,10 +17,6 @@ int readLine(void) {
 		return 0;
 	}
 
-	// int numberOfArgs = 1;
-	// for (int i = 1; i < lengthOfCommand; i++) {
-	// 	if 
-	// }
 	char *argv[10];
 	int i = 0;
 	char* token = strtok(command, " \n\t");

@@ -26,7 +26,7 @@ int forkAndExecute(char * args[]) {
 int readLine(void) {
 	char command[32];
 	char cwd[PATH_MAX];
-	printf("[%s] CRUSH>", getcwd(cwd, sizeof(cwd)));
+	printf("[%s] CRASH>", getcwd(cwd, sizeof(cwd)));
 	fgets(command, sizeof(command), stdin);
 	size_t lengthOfCommand = strlen(command);
 	if (lengthOfCommand > 30) {
@@ -60,7 +60,7 @@ int readLine(void) {
 			fprintf(stderr, "cd: unexpected argument\n");
 		}
 		else if (chdir(args[1]) != 0) {
-			perror("CRUSH");
+			perror("CRASH");
 		}
 		return -1;
 	}
